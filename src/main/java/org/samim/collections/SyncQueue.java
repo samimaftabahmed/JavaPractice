@@ -1,4 +1,4 @@
-package org.samim;
+package org.samim.collections;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,12 +18,9 @@ public class SyncQueue {
         Runnable producer = () -> {
             int value = ThreadLocalRandom.current().nextInt(1, 10000000);
             try {
-//                queue.put(value);
-//                System.out.println("Value put: " + value);
-
-                // offer() is similar to put() except it returns a boolean value stating whether the value is really inserted to the queue.
-                boolean status = queue.offer(value);
-                System.out.println("Value offered: %s, status: %s ".formatted(value, status));
+                System.out.println("Trying Insertion into queue: " + value);
+                queue.put(value); // Thread will wait before insertion if there is no consumer
+                System.out.println("Value put: " + value);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -31,7 +28,7 @@ public class SyncQueue {
 
         Runnable consumer = () -> {
             try {
-                Integer take = queue.take();
+                Integer take = queue.take(); // Thread will wait before taking if there is no producer
                 System.out.println("---- Value take: " + take);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
