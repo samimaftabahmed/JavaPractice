@@ -1,17 +1,28 @@
 package org.samim;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import org.samim.threads.SingletonDoubleCheckedInit;
+import org.samim.threads.SingletonEagerInit;
+import org.samim.threads.Thread1;
+import org.samim.threads.Thread2;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Thread1 thread1 = new Thread1("Thread-1");
+        thread1.start();
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        Thread thread2 = new Thread(new Thread2(), "Thread-2");
+        thread2.start();
+
+        System.out.println("min val " + Integer.MIN_VALUE);
+
+        SingletonDoubleCheckedInit doubleCheckedInit1 = SingletonDoubleCheckedInit.getInstance();
+        SingletonDoubleCheckedInit doubleCheckedInit2 = SingletonDoubleCheckedInit.getInstance();
+        doubleCheckedInit2.setMsg("Hello There");
+        System.out.println(doubleCheckedInit1.getMsg());
+
+        SingletonEagerInit eagerInit1 = SingletonEagerInit.getInstance();
+        SingletonEagerInit eagerInit2 = SingletonEagerInit.getInstance();
+        eagerInit2.setMsg("Hello Team");
+        System.out.println(eagerInit1.getMsg());
     }
 }
