@@ -1,4 +1,4 @@
-package org.samim.collections;
+package org.samim.collections.producer_consumer;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -47,10 +47,10 @@ public class SyncQueue {
 
                 producerCount++;
                 service.submit(producer);
-                int random = ThreadLocalRandom.current().nextInt(1, 3);
+                int random = ThreadLocalRandom.current().nextInt(500, 3000);
                 try {
-                    System.out.println("Sleeping Producer Thread for %s seconds".formatted(random));
-                    TimeUnit.SECONDS.sleep(random);
+                    System.out.println("Sleeping Producer Thread for %s milliseconds".formatted(random));
+                    TimeUnit.MILLISECONDS.sleep(random);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -66,10 +66,10 @@ public class SyncQueue {
                 }
                 service.submit(consumer);
                 consumerCount++;
-                int random = ThreadLocalRandom.current().nextInt(2, 8);
+                int random = ThreadLocalRandom.current().nextInt(1000, 4000);
                 try {
-                    System.out.println("- Sleeping Consumer Thread for %s seconds".formatted(random));
-                    TimeUnit.SECONDS.sleep(random);
+                    System.out.println("- Sleeping Consumer Thread for %s milliseconds".formatted(random));
+                    TimeUnit.MILLISECONDS.sleep(random);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
