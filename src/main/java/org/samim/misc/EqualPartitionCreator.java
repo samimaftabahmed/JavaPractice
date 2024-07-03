@@ -1,4 +1,4 @@
-package org.samim;
+package org.samim.misc;
 
 import com.google.common.collect.Lists;
 
