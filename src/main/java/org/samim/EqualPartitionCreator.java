@@ -6,11 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+/**
+ * Created this as a demo code in order to solve the problem of distributing almost equal number of elements across
+ * partitions, while partitioning with a fixed number of partitions.
+ */
 public class EqualPartitionCreator {
 
     public static void main(String[] args) {
         int totalElements = 6083;
-        int maxPartitions = 20;
+        int maxPartitions = 5;
         List<Integer> inputList = new ArrayList<>(totalElements);
         IntStream.range(0, totalElements).forEach(inputList::add);
 
@@ -25,10 +29,12 @@ public class EqualPartitionCreator {
             System.out.println("Threshold: " + threshold);
 
             subListFirst = inputList.subList(0, difference);
-            subListLast = inputList.subList(difference, totalElements);
-
             System.out.println("sublist 1st: " + subListFirst.size());
-            System.out.println("sublist 2nd: " + subListLast.size());
+
+            if (remainder > 0) {
+                subListLast = inputList.subList(difference, totalElements);
+                System.out.println("sublist 2nd: " + subListLast.size());
+            }
         }
 
         List<List<Integer>> nonModifiablePartitions = Lists.partition(subListFirst, threshold);
