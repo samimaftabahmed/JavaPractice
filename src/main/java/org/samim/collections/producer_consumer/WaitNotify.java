@@ -16,8 +16,8 @@ public class WaitNotify<E> {
 
     public static void main(String[] args) {
         WaitNotify<Integer> waitNotify = new WaitNotify<>();
-        Runnable producer = waitNotify.getProducer(waitNotify);
-        Runnable consumer = waitNotify.getConsumer(waitNotify);
+        Runnable producer = waitNotify.getProducer();
+        Runnable consumer = waitNotify.getConsumer();
 
         ExecutorService service = Executors.newCachedThreadPool();
         service.submit(producer);
@@ -25,12 +25,12 @@ public class WaitNotify<E> {
         service.shutdown();
     }
 
-    private Runnable getConsumer(WaitNotify<Integer> waitNotify) {
+    private Runnable getConsumer() {
         AtomicInteger consumerCount = new AtomicInteger(0);
         Runnable consumer = () -> {
             while (consumerCount.get() < maxExecution) {
                 try {
-                    Integer take = waitNotify.take();
+                    E take = take();
                     System.out.println("- Item Taken %s, iteration %s".formatted(take, consumerCount.get()));
                     consumerCount.getAndAdd(1);
                 } catch (InterruptedException e) {
@@ -41,13 +41,13 @@ public class WaitNotify<E> {
         return consumer;
     }
 
-    private Runnable getProducer(WaitNotify<Integer> waitNotify) {
+    private Runnable getProducer() {
         AtomicInteger producerCount = new AtomicInteger(0);
         Runnable producer = () -> {
             while (producerCount.get() < maxExecution) {
                 int i = ThreadLocalRandom.current().nextInt(1, 1000000);
                 try {
-                    waitNotify.put(i);
+                    put(i);
                     System.out.println("Inserted item %s, iteration %s".formatted(i, producerCount.get()));
                     producerCount.getAndAdd(1);
                 } catch (InterruptedException e) {
@@ -58,13 +58,13 @@ public class WaitNotify<E> {
         return producer;
     }
 
-    public void put(E e) throws InterruptedException {
+    public void put(Object e) throws InterruptedException {
         synchronized (lockObject) {
             while (queue.size() == CAPACITY) {
                 lockObject.wait();
             }
 
-            queue.add(e);
+            queue.add((E) e);
             lockObject.notifyAll();
         }
     }
