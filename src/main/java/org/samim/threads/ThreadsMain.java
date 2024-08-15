@@ -1,11 +1,6 @@
-package org.samim;
+package org.samim.threads;
 
-import org.samim.threads.SingletonDoubleCheckedInit;
-import org.samim.threads.SingletonEagerInit;
-import org.samim.threads.Thread1;
-import org.samim.threads.Thread2;
-
-public class Main {
+public class ThreadsMain {
     public static void main(String[] args) {
         Thread1 thread1 = new Thread1("Thread-1");
         thread1.start();
