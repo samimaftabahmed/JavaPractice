@@ -14,7 +14,7 @@ public class FactoryMain {
 
     public static void main(String[] args) {
         executeCarFactory();
-        executeFactoryMain();
+        executeOSFactory();
     }
 
     private static void executeCarFactory() {
@@ -42,7 +42,7 @@ public class FactoryMain {
     }
 
 
-    private static void executeFactoryMain() {
+    private static void executeOSFactory() {
         OperatingSystem win8 = OperatingSystemFactory.getInstance(OS.WINDOWS, "8.1", "x86");
         OperatingSystem ubuntu20_04 = OperatingSystemFactory.getInstance(OS.LINUX, "Ubuntu 20.04 LTS", "x64");
 
