@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.IntStream;
 
 /**
@@ -13,8 +14,11 @@ import java.util.stream.IntStream;
 public class EqualPartitionCreator {
 
     public static void main(String[] args) {
-        int totalElements = 6083;
-        int maxPartitions = 5;
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter total elements: ");
+        int totalElements = scanner.nextInt();
+        System.out.print("Enter desired number of partitions: ");
+        int maxPartitions = scanner.nextInt();
         List<Integer> inputList = new ArrayList<>(totalElements);
         IntStream.range(0, totalElements).forEach(inputList::add);
 
